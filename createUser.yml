@@ -1,0 +1,13 @@
+---
+  - name: Create user and pass auth keys
+    become: yes
+    hosts: all
+    tasks:
+      - name: Create the User
+        user:
+          name: automation
+      - name: Pass the ssh key
+        authorized_keys:
+          user: automation
+          state: present
+          key: "{{ lookup('file', '/home/automation/.ssh/id_rsa.pub' }}"
